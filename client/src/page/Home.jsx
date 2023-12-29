@@ -99,7 +99,8 @@ const Home = () => {
               ) : (
                 <RenderCards
                   data={allPosts}
-                  title="No Posts Yet"
+                  title="Hey there we have some issue in servers so you can genrate your image but not upload 
+                  "
                 />
               )}
             </div>

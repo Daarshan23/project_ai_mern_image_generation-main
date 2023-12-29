@@ -54,37 +54,39 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (form.prompt && form.photo) {
       setLoading(true);
+
       try {
         const res = await fetch('http://localhost:8080/api/v1/post', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ ...form }),
+          body: JSON.stringify({
+            name: form.name,
+            prompt: form.prompt,
+            photo: form.photo,
+          }),
         });
-  
+
         if (!res.ok) {
-          // Check for HTTP error status
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
-  
+
         const responseData = await res.json();
-  
+
         if (responseData.success) {
-          // Successful response
           console.log(responseData);
           alert('Success');
-          navigate('/');
+          // Navigate or perform any other action on success
         } else {
-          // Error response
           alert(`Error: ${responseData.message}`);
         }
       } catch (err) {
-        // Network or other errors
-        alert(`Error: ${err.message}`);
+        console.error('Fetch error:', err);
+        alert('An error occurred, please try again');
       } finally {
         setLoading(false);
       }
@@ -156,15 +158,15 @@ const CreatePost = () => {
           </button>
         </div>
 
-        <div className="mt-10">
+        {/* <div className="mt-10">
           <p className="mt-2 text-[#666e75] text-[14px]">** Once you have created the image you want, you can share it with others in the community **</p>
           <button
             type="submit"
             className="mt-3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           >
-            {loading ? 'Sharing...' : 'Share with the Community'}
+            {loading ? 'Sharing...' : ''}
           </button>
-        </div>
+        </div> */}
       </form>
     </section>
   );
